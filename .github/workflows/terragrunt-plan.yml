@@ -1,0 +1,39 @@
+name: Terragrunt Plan IaC
+
+on:
+  pull_request:
+      paths:
+        - 'aws/**.hcl'
+        - '!aws/_envcommon/**'
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ===========================================
+  # 1. CODE CHECKOUT & ENV SETUP
+  # ===========================================
+  set-env:
+    name: Set Environment
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+  # ===========================================
+  # 2. TERRAGRUNT PLAN
+  # ===========================================
+  terragrunt-plan:
+    name: Terragrunt Plan Workflow
+    needs: set-env
+    uses: darthfabax-org/actions/.github/workflows/terragrunt-plan.yml@main
+    secrets: inherit

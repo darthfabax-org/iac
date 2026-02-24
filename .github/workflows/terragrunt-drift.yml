@@ -1,0 +1,37 @@
+name: Terragrunt Drift IaC
+
+on:
+  schedule:
+    - cron: '0 8 * * *'
+  
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+  issues: write
+
+jobs:
+  # ===========================================
+  # 1. CODE CHECKOUT & ENV SETUP
+  # ===========================================
+  set-env:
+    name: Checkout repository
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+  # ===========================================
+  # 2. TERRAGRUNT PLAN RUN-ALL
+  # ===========================================
+  terragrunt-drift-detection:
+    name: Terragrunt Drift Detection Workflow
+    needs: set-env
+    uses: darthfabax-org/actions/.github/workflows/terragrunt-drift.yml@main
+    with:
+      account_directory: 'aws/dfbx/eu-south-2'
+    secrets: inherit

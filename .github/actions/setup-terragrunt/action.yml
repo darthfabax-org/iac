@@ -1,0 +1,46 @@
+name: 'Setup Terraform & Terragrunt'
+description: 'Install and configure Terraform and Terragrunt with version verification'
+
+inputs:
+  terraform-version:
+    description: 'Terraform version to install'
+    required: false
+    default: '1.10.3'
+  terragrunt-version:
+    description: 'Terragrunt version to install'
+    required: false
+    default: '0.69.11'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@a1502cd9e758c50496cc9ac5308c4843bcd56d36 # v3.0.0
+      with:
+        terraform_version: ${{ inputs.terraform-version }}
+
+    - name: Setup Terragrunt
+      shell: bash
+      run: |
+        echo "::group::Installing Terragrunt v${{ inputs.terragrunt-version }}"
+        
+        # Download Terragrunt binary
+        sudo wget -q -O /bin/terragrunt \
+          "https://github.com/gruntwork-io/terragrunt/releases/download/v${{ inputs.terragrunt-version }}/terragrunt_linux_amd64"
+        
+        # Make executable
+        sudo chmod +x /bin/terragrunt
+        
+        echo "::endgroup::"
+
+    - name: Verify installation
+      shell: bash
+      run: |
+        echo "::group::Tool Versions"
+        echo "Terragrunt version:"
+        terragrunt --version
+        echo ""
+        echo "Terraform version:"
+        terraform --version
+        echo "✅ Tools successfully installed"
+        echo "::endgroup::"

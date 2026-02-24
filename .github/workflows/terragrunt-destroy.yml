@@ -1,0 +1,43 @@
+name: Terragrunt Destroy IaC
+
+on:
+  workflow_dispatch:
+    inputs:
+      destroy_directory:
+        description: 'Directory to destroy'
+        default: "aws/<environment>/<region>/resources/<resource>"
+        required: true
+
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ===========================================
+  # 1. CODE CHECKOUT & ENV SETUP
+  # ===========================================
+  set-env:
+    name: Set Environment
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+  # ===========================================
+  # 1. TERRAGRUNT DESTROY
+  # ===========================================
+  terragrunt-destroy:
+    name: Terragrunt Destroy Workflow
+    needs: set-env
+    uses: darthfabax-org/actions/.github/workflows/terragrunt-destroy.yml@main
+    with:
+      destroy_directory: ${{ github.event.inputs.destroy_directory }}
+    secrets: inherit

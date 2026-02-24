@@ -1,0 +1,31 @@
+name: 'Setup AWS Credentials'
+description: 'Configure AWS credentials using OIDC and verify connection'
+
+inputs:
+  role-to-assume:
+    description: 'AWS IAM Role ARN to assume'
+    required: true
+  aws-region:
+    description: 'AWS Region for deployment'
+    required: true
+  role-session-name:
+    description: 'Session name for AWS role assumption'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
+      with:
+        role-to-assume: ${{ inputs.role-to-assume }}
+        aws-region: ${{ inputs.aws-region }}
+        role-session-name: ${{ inputs.role-session-name }}
+    
+    - name: Verify AWS credentials
+      shell: bash
+      run: |
+        echo "::group::AWS Identity Verification"
+        aws sts get-caller-identity
+        echo "✅ Successfully authenticated with AWS"
+        echo "::endgroup::"
