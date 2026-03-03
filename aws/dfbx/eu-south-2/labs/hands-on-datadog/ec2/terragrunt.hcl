@@ -16,6 +16,10 @@ include "envcommon" {
   expose = true
 }
 
+terraform {
+  source = "${include.envcommon.locals.base_source_url}"
+}
+
 dependency "vpc" {
   config_path = "../vpc"
 
