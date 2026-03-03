@@ -17,7 +17,7 @@ terraform {
 }
 
 dependency "vpc" {
-  config_path = "../vpc"
+  config_path = "../../vpc"
   mock_outputs = {
     private_subnets           = ["subnet-00000000000000000"]
     default_security_group_id = "sg-00000000000000000"
