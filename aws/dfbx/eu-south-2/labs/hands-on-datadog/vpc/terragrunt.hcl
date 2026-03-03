@@ -1,7 +1,7 @@
 locals {
   # Load configuration from parent folders
-  env_vars = read_terragrunt_config(find_in_parent_folders("env.hcl"))
-  lab_vars = read_terragrunt_config(find_in_parent_folders("lab.hcl"))
+  env_vars    = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+  lab_vars    = read_terragrunt_config(find_in_parent_folders("lab.hcl"))
   region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
 
   lab_name = local.lab_vars.locals.lab_name
@@ -12,7 +12,7 @@ include "root" {
 }
 
 include "envcommon" {
-  path = "${dirname(find_in_parent_folders("root.hcl"))}/_envcommon/vpc/vpc.hcl"
+  path   = "${dirname(find_in_parent_folders("root.hcl"))}/_envcommon/vpc/vpc.hcl"
   expose = true
 }
 

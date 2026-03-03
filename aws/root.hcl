@@ -40,7 +40,7 @@ provider "aws" {
   default_tags {
     tags = {
       creator     = "terragrunt"
-      environment = "${local.environment_vars.locals.environment}"
+      state       = "true"
       repository  = "https://github.com/darthfabax-org/iac"
     }
   }
