@@ -14,7 +14,7 @@ include "root" {
 # El Forwarder no tiene módulo en _envcommon porque es específico de DataDog.
 # Usamos CloudFormation Stack via Terraform (así lo distribuye DataDog oficialmente).
 terraform {
-  source = "tfr:///datadog/datadog/aws//modules/forwarder?version=3.10.0"
+  source = "github.com/DataDog/datadog-serverless-functions//aws/logs_monitoring?ref=v5.3.0"
 }
 
 dependency "vpc" {
