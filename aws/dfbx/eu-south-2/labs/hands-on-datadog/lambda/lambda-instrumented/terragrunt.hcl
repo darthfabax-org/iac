@@ -54,16 +54,18 @@ inputs = {
   environment_variables = {
     # Apunta al handler real de tu función (DD Layer hace de wrapper)
     DD_LAMBDA_HANDLER = "app.handler"
-    
-    DD_SITE           = "datadoghq.eu"
-    DD_ENV            = "labs"
-    DD_SERVICE        = "dd-lab-lambda"
-    DD_VERSION        = "1.0.0"
-    DD_TRACE_ENABLED  = "true"
-    
+
+    DD_SITE                    = "datadoghq.eu"
+    DD_ENV                     = "labs"
+    DD_SERVICE                 = "dd-lab-lambda"
+    DD_VERSION                 = "1.0.0"
+    DD_TRACE_ENABLED           = "true"
+    DD_LOG_LEVEL               = "DEBUG"
+    DD_SERVERLESS_LOGS_ENABLED = "true"
+
     # Lee la API Key desde SSM en runtime (más seguro que env var directa)
     DD_API_KEY_SECRET_ARN = "arn:aws:ssm:${local.region_vars.locals.aws_region}:${local.account_vars.locals.aws_account_id}:parameter/labs/datadog/DD_API_KEY"
-    
+
     # Captura el payload de request/response para debugging (DESACTIVAR en prod — expone PII)
     DD_CAPTURE_LAMBDA_PAYLOAD = "false"
   }
