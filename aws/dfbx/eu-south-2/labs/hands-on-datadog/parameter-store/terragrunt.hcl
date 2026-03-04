@@ -5,8 +5,6 @@ locals {
   env_vars    = read_terragrunt_config(find_in_parent_folders("env.hcl"))
   lab_vars    = read_terragrunt_config(find_in_parent_folders("lab.hcl"))
   region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
-
-  lab_name = local.lab_vars.locals.lab_name
 }
 
 include "root" {
@@ -42,8 +40,7 @@ inputs = {
   tags = merge(
     local.env_vars.locals.tags,
     {
-      lab-name = local.lab_name
-      role     = "parameter-store"
+      role = "parameter-store"
     }
   )
 }
