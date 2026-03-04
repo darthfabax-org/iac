@@ -46,7 +46,7 @@ inputs = {
   tags = merge(
     local.env_vars.locals.tags,
     {
-      role = "dd-forwarder"
+      role = "dd-forwarder-lambda"
     }
   )
 }
