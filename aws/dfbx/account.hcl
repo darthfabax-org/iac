@@ -1,4 +1,4 @@
 locals {
   account_name = "dfbx"
-  account_id   = "743199288519"
+  aws_account_id   = "743199288519"
 }

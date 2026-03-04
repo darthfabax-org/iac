@@ -17,14 +17,14 @@ locals {
   environment_suffix = local.environment_vars.locals.environment == "production" ? "" : "${local.environment_vars.locals.environment}"
 
   # Extract the variables we need for easy access
-  account_name = local.account_vars.locals.account_name
-  account_id   = local.account_vars.locals.account_id
-  aws_region   = local.region_vars.locals.aws_region
+  account_name     = local.account_vars.locals.account_name
+  aws_account_id   = local.account_vars.locals.aws_account_id
+  aws_region       = local.region_vars.locals.aws_region
 
   # This accounts can assume role for tf state in shared services.
   trusted_arns = [
-    "arn:aws:iam::743199288519:role/dfbx-github-actions-role-iac", # GITHUB ACTIONS
-    "arn:aws:iam::743199288519:role/dfbx-admin-role-iac"           # TERRAFORM CLI
+    "arn:aws:iam::${local.aws_account_id}:role/dfbx-github-actions-role-iac", # GITHUB ACTIONS
+    "arn:aws:iam::${local.aws_account_id}:role/dfbx-admin-role-iac"           # TERRAFORM CLI
   ]
   account_ids = [for arn in local.trusted_arns : split(":", arn)[4]]
 }

@@ -31,7 +31,7 @@ inputs = {
   dd_site = "datadoghq.eu"
 
   # API Key from SSM
-  dd_api_key_secret_arn = "arn:aws:ssm:${local.region_vars.locals.aws_region}:${local.account_vars.locals.account_id}:parameter/labs/datadog/DD_API_KEY"
+  dd_api_key_secret_arn = "arn:aws:ssm:${local.region_vars.locals.aws_region}:${local.account_vars.locals.aws_account_id}:parameter/labs/datadog/DD_API_KEY"
 
   # The Forwarder is deployed in the private VPC for security
   subnet_ids         = dependency.vpc.outputs.private_subnets
