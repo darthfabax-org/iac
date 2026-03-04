@@ -74,6 +74,7 @@ inputs = {
     # 2. Install Datadog agent in a unattended manner
     DD_API_KEY=$DD_API_KEY \
     DD_SITE="datadoghq.eu" \
+    DD_LOGS_CONFIG_PROCESS_COLLECT_ALL=true \
     DD_HOST_TAGS="env:labs,role:datadog-agent-test" \
     bash -c "$(curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script_agent7.sh)"
 
