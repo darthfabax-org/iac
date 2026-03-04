@@ -21,22 +21,15 @@ terraform {
 }
 
 inputs = {
-  parameters = {
-    "/labs/datadog/DD_API_KEY" = {
-      type        = "SecureString"
-      description = "DataDog API Key for labs environment"
-      value       = "PLACEHOLDER_REPLACE_MANUALLY_IN_CONSOLE"
-      overwrite   = false  # Do not overwrite if the parameter already exists
-    }
-
-    "/labs/datadog/DD_APP_KEY" = {
-      type        = "SecureString"
-      description = "DataDog APP Key for labs environment"
-      value       = "PLACEHOLDER_REPLACE_MANUALLY_IN_CONSOLE"
-      overwrite   = false
-    }
-  }
-
+  # El módulo v2.0+ usa estas variables directamente para UN parámetro
+  # Si necesitas muchos, se suele usar un for_each en el wrapper o llamar al módulo varias veces.
+  
+  name           = "/labs/datadog/DD_API_KEY"
+  value          = "PLACEHOLDER_REPLACE_MANUALLY_IN_CONSOLE"
+  type           = "SecureString"
+  description    = "DataDog API Key for labs environment"
+  secure_type    = true # Importante para SecureString en la nueva versión
+  
   tags = merge(
     local.env_vars.locals.tags,
     {
@@ -44,4 +37,3 @@ inputs = {
     }
   )
 }
-
