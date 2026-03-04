@@ -1,10 +1,10 @@
 # aws/dfbx/eu-south-2/labs/hands-on-datadog/lambda/dd-forwarder/terragrunt.hcl
 
 locals {
-  env_vars    = read_terragrunt_config(find_in_parent_folders("env.hcl"))
-  lab_vars    = read_terragrunt_config(find_in_parent_folders("lab.hcl"))
-  region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
-  account_vars  = read_terragrunt_config(find_in_parent_folders("account.hcl"))
+  env_vars     = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+  lab_vars     = read_terragrunt_config(find_in_parent_folders("lab.hcl"))
+  region_vars  = read_terragrunt_config(find_in_parent_folders("region.hcl"))
+  account_vars = read_terragrunt_config(find_in_parent_folders("account.hcl"))
 }
 
 include "root" {
@@ -46,8 +46,7 @@ inputs = {
   tags = merge(
     local.env_vars.locals.tags,
     {
-      lab-name = local.lab_name
-      role     = "dd-forwarder"
+      role = "dd-forwarder"
     }
   )
 }
