@@ -40,7 +40,7 @@ inputs = {
   runtime = "python3.12"
 
   # Código inline para el laboratorio — en prod sería un S3 artifact
-  source_path = "./src"
+  source_path = ["${get_terragrunt_dir()}/src"]
 
   # ── DATADOG LAYER ──────────────────────────────────────────────────────────
   # ARN del Layer oficial de DataDog para Python 3.12 en eu-south-2
