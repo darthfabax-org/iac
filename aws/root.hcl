@@ -60,7 +60,8 @@ config = {
     bucket         = "dfbx-terraform-state-${local.account_name}-${local.environment_suffix}-${local.aws_region}"
     key            = "${path_relative_to_include()}/tf.tfstate"
     region         = local.aws_region
-    dynamodb_table = "dfbx-terraform-state-lock-${local.account_name}-${local.environment_suffix}-${local.aws_region}"
+    use_lockfile   = true
+    lock_table     = "dfbx-terraform-state-lock-${local.account_name}-${local.environment_suffix}-${local.aws_region}"
 
     s3_bucket_tags = {
       name        = "Terraform State Storage"

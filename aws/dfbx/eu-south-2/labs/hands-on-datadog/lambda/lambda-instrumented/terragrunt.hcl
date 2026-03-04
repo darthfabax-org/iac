@@ -1,12 +1,10 @@
 # aws/dfbx/eu-south-2/labs/hands-on-datadog/lambda/lambda-instrumented/terragrunt.hcl
 
 locals {
-  # Load configuration from parent folders
-  env_vars    = read_terragrunt_config(find_in_parent_folders("env.hcl"))
-  lab_vars    = read_terragrunt_config(find_in_parent_folders("lab.hcl"))
-  region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
-
-  lab_name = local.lab_vars.locals.lab_name
+  env_vars     = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+  lab_vars     = read_terragrunt_config(find_in_parent_folders("lab.hcl"))
+  region_vars  = read_terragrunt_config(find_in_parent_folders("region.hcl"))
+  account_vars = read_terragrunt_config(find_in_parent_folders("account.hcl"))
 }
 
 include "root" {
@@ -64,11 +62,13 @@ inputs = {
     DD_TRACE_ENABLED  = "true"
     
     # Lee la API Key desde SSM en runtime (más seguro que env var directa)
-    DD_API_KEY_SECRET_ARN = "arn:aws:ssm:${local.region_vars.locals.aws_region}:743199288519:parameter/labs/datadog/DD_API_KEY"
+    DD_API_KEY_SECRET_ARN = "arn:aws:ssm:${local.region_vars.locals.aws_region}:${local.account_vars.locals.aws_account_id}:parameter/labs/datadog/DD_API_KEY"
     
     # Captura el payload de request/response para debugging (DESACTIVAR en prod — expone PII)
     DD_CAPTURE_LAMBDA_PAYLOAD = "false"
   }
+
+  attach_network_policy = true
 
   # Permisos para leer la API Key de SSM
   attach_policy_statements = true

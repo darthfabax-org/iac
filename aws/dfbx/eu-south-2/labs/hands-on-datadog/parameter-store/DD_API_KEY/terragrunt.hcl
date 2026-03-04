@@ -1,10 +1,10 @@
-# aws/dfbx/eu-south-2/labs/hands-on-datadog/parameter-store/terragrunt.hcl
+# aws/dfbx/eu-south-2/labs/hands-on-datadog/parameter-store/DD_API_KEY/terragrunt.hcl
 
 locals {
-  # Load configuration from parent folders
-  env_vars    = read_terragrunt_config(find_in_parent_folders("env.hcl"))
-  lab_vars    = read_terragrunt_config(find_in_parent_folders("lab.hcl"))
-  region_vars = read_terragrunt_config(find_in_parent_folders("region.hcl"))
+  env_vars     = read_terragrunt_config(find_in_parent_folders("env.hcl"))
+  lab_vars     = read_terragrunt_config(find_in_parent_folders("lab.hcl"))
+  region_vars  = read_terragrunt_config(find_in_parent_folders("region.hcl"))
+  account_vars = read_terragrunt_config(find_in_parent_folders("account.hcl"))
 }
 
 include "root" {
@@ -21,14 +21,11 @@ terraform {
 }
 
 inputs = {
-  # El módulo v2.0+ usa estas variables directamente para UN parámetro
-  # Si necesitas muchos, se suele usar un for_each en el wrapper o llamar al módulo varias veces.
-  
   name           = "/labs/datadog/DD_API_KEY"
   value          = "PLACEHOLDER_REPLACE_MANUALLY_IN_CONSOLE"
   type           = "SecureString"
   description    = "DataDog API Key for labs environment"
-  secure_type    = true # Importante para SecureString en la nueva versión
+  secure_type    = true
   
   tags = merge(
     local.env_vars.locals.tags,
