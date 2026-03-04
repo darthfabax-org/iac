@@ -5,7 +5,7 @@ inputs:
   terraform-version:
     description: "Terraform version to install"
     required: false
-    default: '1.11.0'
+    default: "1.11.0"
   terragrunt-version:
     description: "Terragrunt version to install"
     required: false
@@ -15,7 +15,7 @@ runs:
   using: "composite"
   steps:
     - name: Setup Terraform
-      uses: hashicorp/setup-terraform@a1502cd9e758c50496cc9ac5308c4843bcd56d36 # v3.0.0
+      uses: hashicorp/setup-terraform@v3
       with:
         terraform_version: ${{ inputs.terraform-version }}
 
