@@ -32,7 +32,7 @@ inputs = {
   function_name = "${local.lab_vars.locals.lab_name}-instrumented-${local.region_vars.locals.aws_region}"
   description   = "Lambda de laboratorio instrumentada con DataDog Layer"
   memory_size   = 256
-  timeout       = 30
+  timeout       = 50
 
   # Handler envuelto: DataDog intercepta la invocación antes de llamar a tu handler
   # Patrón wrapper: DD Layer → tu_modulo.tu_funcion
